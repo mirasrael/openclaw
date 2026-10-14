@@ -1143,8 +1143,8 @@ export async function createContextEngineAttemptRunner(params: {
         initialMessages: seedMessages,
         prompt: params.sessionPrompt,
       });
-    session.setActiveToolsByName(options.tools ?? []);
-    session.setBaseSystemPrompt(options.systemPrompt ?? "");
+    session.setBaseSystemPrompt(options.systemPrompt);
+    session.setActiveToolsByName(options.tools);
     // Nested tool observations append through the same manager the runner prepared.
     session.sessionManager = options.sessionManager;
     if (session.agent.streamFn) {
