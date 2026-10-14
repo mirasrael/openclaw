@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { OpenClawSchema } from "../config/zod-schema.js";
 
 const CLOUD_WORKER_DOCS = [
-  "docs/gateway/cloud-workers.md",
+  "docs/gateway/cloud-workers/native-inference.md",
   "docs/gateway/config-cloud-workers.md",
 ] as const;
 

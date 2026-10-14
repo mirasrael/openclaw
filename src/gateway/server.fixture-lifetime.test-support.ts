@@ -202,9 +202,6 @@ const scenario = ${JSON.stringify(scenario)};
 const takeHooks = () => Object.fromEntries(
   Object.entries(hooks).map(([name, callbacks]) => [name, callbacks.splice(0)]),
 );
-async function runHooks(callbacks) {
-  for (const callback of callbacks) await callback();
-}
 function containsError(error, expected) {
   return expected !== undefined && (error === expected || (error instanceof Error && (
     containsError(error.cause, expected) ||
@@ -227,7 +224,10 @@ function closeOwned(server) {
   }) : Promise.resolve();
 }
 
-test("observes startup cleanup ownership through fixture teardown", async () => {
+test("observes startup cleanup ownership through fixture teardown", async (context) => {
+  async function runHooks(callbacks) {
+    for (const callback of callbacks) await callback(context);
+  }
   const originals = [];
   const own = promise => { originals.push(promise); return promise; };
   const restorers = [];
