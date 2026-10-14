@@ -9,6 +9,7 @@ import {
   type ProfileUsageStats,
 } from "../../agents/auth-profiles.js";
 import { buildAuthProfileUnusableHint } from "../../agents/auth-profiles/oauth-refresh-failure.js";
+import { readAuthProfileUsageStats } from "../../agents/auth-profiles/usage-state.js";
 import { resolveProviderIdForAuth } from "../../agents/provider-auth-aliases.js";
 import { type RuntimeEnv, writeRuntimeJson } from "../../runtime.js";
 import { shortenHomePath } from "../../utils.js";
@@ -106,7 +107,7 @@ export async function modelsAuthListCommand(
         store,
         profileId,
         profile,
-        usage: store.usageStats?.[profileId],
+        usage: readAuthProfileUsageStats(store, profileId),
       }),
     )
     .filter((profile) => !provider || profile.provider === provider)
